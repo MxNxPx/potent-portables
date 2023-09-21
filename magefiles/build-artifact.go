@@ -19,7 +19,9 @@ var (
 	// Aliases are mage aliases of targets
 	Aliases = map[string]interface{}{
 		"build":  Build.Build,
+		"b":      Build.Build,
 		"deploy": Deploy.Deploy,
+		"d":      Deploy.Deploy,
 	}
 )
 
