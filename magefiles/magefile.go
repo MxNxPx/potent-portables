@@ -1,10 +1,18 @@
 //go:build mage
 // +build mage
 
-// A comment on the package will be output when you list the targets of a
-// magefile.
 package main
 
-// A var named Default indicates which target is the default.  If there is no 
+var (
+	// Aliases are mage aliases of targets
+	Aliases = map[string]interface{}{
+		"build":  Build.Build,
+		"b":      Build.Build,
+		"deploy": Deploy.Deploy,
+		"d":      Deploy.Deploy,
+	}
+)
+
+// A var named Default indicates which target is the default.  If there is no
 // default, running mage will list the targets available.
-var Default = Hello
+//var Default = NA
