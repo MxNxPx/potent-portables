@@ -15,15 +15,27 @@ import (
 	"github.com/magefile/mage/sh"
 )
 
+var (
+	// Aliases are mage aliases of targets
+	Aliases = map[string]interface{}{
+		"build":  Build.Build,
+		"deploy": Deploy.Deploy,
+	}
+)
+
+type Build mg.Namespace
+
 var zarf = sh.RunCmd("zarf")
 
 // Create package using Zarf
-func Build() error {
+func (Build) Build() error {
 	return zarf("package", "create", "--confirm", "--output", "./app", "./app")
 }
 
+type Deploy mg.Namespace
+
 // Install package using Zarf
-func Deploy() error {
+func (Deploy) Deploy() error {
 	os.Chdir("./app")
 	newDir, err := os.Getwd()
 	if err != nil {
