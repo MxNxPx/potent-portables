@@ -1,0 +1,48 @@
+kind: ZarfPackageConfig
+metadata:
+  name: podinfo
+  description: "Podinfo zarf package"
+  # x-release-please-start-version
+  version: "0.0.1"
+  # x-release-please-end
+  url: https://github.com/stefanprodan/podinfo
+  image: https://raw.githubusercontent.com/stefanprodan/podinfo/gh-pages/screens/podinfo-ui-v3.png
+  architecture: amd64
+
+variables:
+- name: PODINFO_UI_COLOR
+  default: "#000000"
+  prompt: false
+
+components:
+  - name: k8s-manifests
+    required: true
+    manifests:
+      - name: k8s-manifests
+        files:
+          - k8s-manifests/podinfo-manifests.yaml
+    actions:
+      onDeploy:
+        after: &ondeploy-after-k8s-info
+          - cmd: |
+              echo "[*] k8s info";
+              ./zarf tools kubectl get deploy -A;
+              ./zarf tools kubectl get po -A;
+              ./zarf tools kubectl get svc -A;
+              ./zarf tools kubectl get ep -A;
+            description: "Validate deployed component(s)"
+  - name: podinfo-chart
+    required: true
+    charts:
+      - name: podinfo
+        version: 6.3.6
+        namespace: podinfo
+        releaseName: podinfo
+        url: oci://ghcr.io/stefanprodan/charts/podinfo
+        valuesFiles:
+        - values/podinfo-values.yaml
+    images:
+      - "ghcr.io/stefanprodan/podinfo:6.3.6"
+    actions:
+      onDeploy:
+        after: *ondeploy-after-k8s-info
