@@ -27,8 +27,19 @@ type Build mg.Namespace
 
 var zarf = sh.RunCmd("zarf")
 
+// Create package
+func (Build) Build() {
+	Build.ZarfVersion(Build{})
+	Build.ZarfBuild(Build{})
+}
+
+// Output Zarf version
+func (Build) ZarfVersion() error {
+	return zarf("version")
+}
+
 // Create package using Zarf
-func (Build) Build() error {
+func (Build) ZarfBuild() error {
 	return zarf("package", "create", "--confirm", "--output", "./app", "./app")
 }
 
