@@ -7,7 +7,6 @@ metadata:
   # x-release-please-end
   url: https://github.com/stefanprodan/podinfo
   image: https://raw.githubusercontent.com/stefanprodan/podinfo/gh-pages/screens/podinfo-ui-v3.png
-  architecture: amd64
 
 variables:
 - name: PODINFO_UI_COLOR
