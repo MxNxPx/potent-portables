@@ -13,3 +13,4 @@ securityContext:
 
 ui:
   color: "###ZARF_VAR_PODINFO_UI_COLOR###"
+  message: "Hello There!"

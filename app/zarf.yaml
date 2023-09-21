@@ -24,13 +24,13 @@ components:
     actions:
       onDeploy:
         after: &ondeploy-after-k8s-info
-          - cmd: |
+          - description: "[*] k8s info"
+            cmd: |
               echo "[*] k8s info";
               ./zarf tools kubectl get deploy -A;
               ./zarf tools kubectl get po -A;
               ./zarf tools kubectl get svc -A;
               ./zarf tools kubectl get ep -A;
-            description: "Validate deployed component(s)"
   - name: podinfo-chart
     required: true
     charts:
@@ -43,6 +43,13 @@ components:
         - values/podinfo-values.yaml
     images:
       - "ghcr.io/stefanprodan/podinfo:6.3.6"
+  - name: patch
+    required: true
     actions:
       onDeploy:
         after: *ondeploy-after-k8s-info
+        before: 
+          - cmd: |
+              echo "[*] patch podinfo svc";
+              ./zarf tools kubectl patch -n podinfo svc/podinfo --type=json -p='[{"op": "add", "path": "/metadata/labels/zarf.dev~1connect-name", "value": "podinfo"}]';
+            description: "[*] patch podinfo svc"
