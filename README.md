@@ -48,7 +48,7 @@ Targets:
   deploy:zarfDeployOCI    Install OCI package using Zarf - (aka 'mage deploy:oci').
 
 # List Target Details
-$ mage -h mage -h deploy:zarfdeploy
+$ mage -h deploy:zarfdeploy
 Install package using Zarf - (aka 'mage deploy:local'). Deploys zarf package under ./app directory
 Usage:
         mage deploy:zarfdeploy
