@@ -12,20 +12,20 @@ import (
 
 type Airgap mg.Namespace
 
-// Airgap
-func (Airgap) Deploy() {
+// Airgap - (aka 'mage a').
+func (Airgap) All() {
 	Airgap.ZarfInit(Airgap{})
 
 	mg.Deps(Airgap.ZarfInit)
 	Airgap.ZarfDeploy(Airgap{})
 }
 
-// Airgap Init
+// Airgap Init Cluster - (aka 'mage airgap:init').
 func (Airgap) ZarfInit() error {
 	return zarf("init", "--components=k3s", "--confirm")
 }
 
-// Airgap Deploy
+// Airgap Deploy - (aka 'mage airgap:deploy').
 func (Airgap) ZarfDeploy() error {
 	os.Chdir("./app")
 	newDir, err := os.Getwd()

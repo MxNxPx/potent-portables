@@ -12,9 +12,9 @@ import (
 
 type Deploy mg.Namespace
 
-// Install package - aka 'mage d'
-// (For existing OCI package, use: `mage deploy oci://pkg-url-here`, or local, use: `mage deploy local`)
-func (Deploy) Deploy(ociFlag string) {
+// Install package - (aka 'mage d') |
+// usage: 'mage deploy oci://pkg-url-here', or 'mage deploy local'.
+func (Deploy) All(ociFlag string) {
 
 	if ociFlag == "local" {
 		fmt.Println("No value provided for --oci flag, calling ZarfDeploy")
@@ -24,8 +24,8 @@ func (Deploy) Deploy(ociFlag string) {
 	}
 }
 
-// Install package using Zarf
-// (conditional sub-Target of 'mage deploy')
+// Install package using Zarf - (aka 'mage deploy:local').
+// Deploys zarf package under ./app directory
 func (Deploy) ZarfDeploy() error {
 	os.Chdir("./app")
 	newDir, err := os.Getwd()
@@ -43,8 +43,7 @@ func (Deploy) ZarfDeploy() error {
 	return zarf("package", "deploy", "--confirm", filename)
 }
 
-// Install OCI package using Zarf
-// (conditional sub-Target of 'mage deploy')
+// Install OCI package using Zarf - (aka 'mage deploy:oci').
 func (Deploy) ZarfDeployOCI(ociFlag string) error {
 	os.Chdir("./app")
 	newDir, err := os.Getwd()

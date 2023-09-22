@@ -35,14 +35,25 @@ $ go install github.com/magefile/mage@latest
 $ export MAGEFILE_VERBOSE=1
 
 # List Targets
-$ mage
+$ mage -l
 Targets:
-  build:build             Create package - aka 'mage b'
-  build:zarfBuild         Create package using Zarf (sub-Target of 'mage build')
-  build:zarfVersion       Output Zarf version (sub-Target of 'mage build')
-  deploy:deploy           Install package - aka 'mage d' (For existing OCI package, use: `mage deploy oci://pkg-url-here`, or local, use: `mage deploy local`)
-  deploy:zarfDeploy       Install package using Zarf (conditional sub-Target of 'mage deploy')
-  deploy:zarfDeployOCI    Install OCI package using Zarf (conditional sub-Target of 'mage deploy')
+  airgap:all              Airgap - (aka 'mage a').
+  airgap:zarfDeploy       Airgap Deploy - (aka 'mage airgap:deploy').
+  airgap:zarfInit         Airgap Init Cluster - (aka 'mage airgap:init').
+  build:all               Create package - aka 'mage b'.
+  build:zarfBuild         Create package using Zarf.
+  build:zarfVersion       Output Zarf version.
+  deploy:all              Install package - (aka 'mage d') | usage: 'mage deploy oci://pkg-url-here', or 'mage deploy local'.
+  deploy:zarfDeploy       Install package using Zarf - (aka 'mage deploy:local').
+  deploy:zarfDeployOCI    Install OCI package using Zarf - (aka 'mage deploy:oci').
+
+# List Target Details
+$ mage -h mage -h deploy:zarfdeploy
+Install package using Zarf - (aka 'mage deploy:local'). Deploys zarf package under ./app directory
+Usage:
+        mage deploy:zarfdeploy
+
+Aliases: deploy:local
 
 # Build
 $ mage build
@@ -57,7 +68,7 @@ $ mage deploy oci://ghcr.io/mxnxpx/packages/podinfo:0.0.1-amd64
 ## Air Gap
 
 ```console
-# (Internet connected machine) Create Zarf potent-portables package for Air Gap
+# (Internet connected machine) Create Zarf potent-portables package for Air Gap and compiles mage-bin/mage binary
 zarf package create . --confirm
 
 # (Air Gap machine)
@@ -71,22 +82,9 @@ $ zarf tools archiver decompress zarf-package-potent-portables-amd64-0.0.1.tar.z
 $ cd airgap
 $ export PATH=./mage-bin:$PATH
 
-# Set Debug (same as 'mage -v')
+# (Air Gap machine) Set Debug (same as 'mage -v')
 $ export MAGEFILE_VERBOSE=1
 
-# List Targets
-$ mage
-Targets:
-  build:build             Create package - aka 'mage b'
-  build:zarfBuild         Create package using Zarf (sub-Target of 'mage build')
-  build:zarfVersion       Output Zarf version (sub-Target of 'mage build')
-  deploy:deploy           Install package - aka 'mage d' (For existing OCI package, use: `mage deploy oci://pkg-url-here`, or local, use: `mage deploy local`)
-  deploy:zarfDeploy       Install package using Zarf (conditional sub-Target of 'mage deploy')
-  deploy:zarfDeployOCI    Install OCI package using Zarf (conditional sub-Target of 'mage deploy')
-
-# Build
-$ mage build
-
-# Deploy from local
-$ mage deploy local
+# (Air Gap machine) Run all Air Gap Targets
+$ mage airgap
 ```

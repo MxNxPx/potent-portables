@@ -6,10 +6,16 @@ package main
 var (
 	// Aliases are mage aliases of targets
 	Aliases = map[string]interface{}{
-		"build":  Build.Build,
-		"b":      Build.Build,
-		"deploy": Deploy.Deploy,
-		"d":      Deploy.Deploy,
+		"airgap":        Airgap.All,
+		"a":             Airgap.All,
+		"airgap:deploy": Airgap.ZarfDeploy,
+		"airgap:init":   Airgap.ZarfInit,
+		"build":         Build.All,
+		"b":             Build.All,
+		"deploy":        Deploy.All,
+		"d":             Deploy.All,
+		"deploy:local":  Deploy.ZarfDeploy,
+		"deploy:oci":    Deploy.ZarfDeployOCI,
 	}
 )
 
