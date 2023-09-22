@@ -95,6 +95,9 @@ $ zarf tools archiver decompress zarf-package-potent-portables-amd64-0.0.1.tar.z
     mv tmp-extract/components/compile/files/0 airgap && \
     rm -rf tmp-extract
 
+# (Air Gap machine)
+# Copy zarf-package-podinfo-amd64-0.0.1.tar.zst into `airgap/app` directory
+
 # (Air Gap machine) Change Directory to airgap and Set mage path
 $ cd airgap
 $ export PATH=./mage-bin:$PATH
