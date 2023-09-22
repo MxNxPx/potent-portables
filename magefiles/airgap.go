@@ -14,14 +14,15 @@ type Airgap mg.Namespace
 
 // Airgap
 func (Airgap) Deploy() {
-
 	Airgap.ZarfInit(Airgap{})
+
+	mg.Deps(Airgap.ZarfInit)
 	Airgap.ZarfDeploy(Airgap{})
 }
 
 // Airgap Init
 func (Airgap) ZarfInit() error {
-	return zarf("package", "init", "--components=k3s", "--confirm")
+	return zarf("init", "--components=k3s", "--confirm")
 }
 
 // Airgap Deploy

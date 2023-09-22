@@ -24,5 +24,7 @@ func (Build) ZarfVersion() error {
 // Create package using Zarf
 // (sub-Target of 'mage build')
 func (Build) ZarfBuild() error {
+	mg.Deps(Build.ZarfVersion)
+
 	return zarf("package", "create", "--confirm", "--output", "./app", "./app")
 }
