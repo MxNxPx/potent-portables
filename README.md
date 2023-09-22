@@ -6,7 +6,11 @@
 
 </div>
 
-A portable method for CI using [Mage](https://github.com/magefile/mage#readme)
+A portable method for CI/CD using [Mage](https://github.com/magefile/mage#readme)
+
+## Additional Docs
+
+See Additional Docs [here](./docs/README.md)
 
 ## Pre-reqs
 
@@ -17,12 +21,14 @@ A portable method for CI using [Mage](https://github.com/magefile/mage#readme)
 - K8s context set
 - Golang v1.20+
 - Git repo cloned
+- Creds setup (IronBank, GHCR, etc)
 
 ### Egress limited machine (VM?)
 
 - Zarf
 - Zarf init package
 - Zarf potent-portables package
+- Zarf podinfo package
 - Golang v1.20+ installed
 
 ## Local Dev
@@ -65,18 +71,33 @@ $ mage deploy local
 $ mage deploy oci://ghcr.io/mxnxpx/packages/podinfo:0.0.1-amd64
 ```
 
+## GitHub & Gitlab Pipelines using Mage
+
+- GitHub: https://github.com/noahpb/potent-portables-pipeline
+- GitLab: https://gitlab.com/noahbirrer/potent-potable-pipeline/
+
 ## Air Gap
 
 ```console
 # (Internet connected machine) Create Zarf potent-portables package for Air Gap and compiles mage-bin/mage binary
-zarf package create . --confirm
+$ zarf package create . --confirm
+
+# (Internet connected machine) Create Zarf podinfo package for Air Gap
+$ cd ./app
+$ zarf package create . --confirm
 
 # (Air Gap machine)
-# Copy zarf, zarf init package, zarf potent-portables package onto portable media
+# Copy zarf, zarf init package, zarf potent-portables package, and zarf podinfo package onto portable media
 # Copy contents of portable media to Air Gap machine
+# `zarf` somewhere $PATH will find it
+# zarf init package under `~/.zarf-cache`
+# `mkdir ~/airgap/app` & Copy zarf podinfo package
+# Copy zarf potent-portables under `~/`
 
 # (Air Gap machine) Extract zarf package
-$ zarf tools archiver decompress zarf-package-potent-portables-amd64-0.0.1.tar.zst tmp-extract --unarchive-all && mv tmp-extract/components/compile/files/0 airgap && rm -rf tmp-extract
+$ zarf tools archiver decompress zarf-package-potent-portables-amd64-0.0.1.tar.zst tmp-extract --unarchive-all && \
+    cp -Rf tmp-extract/components/compile/files/0/* airgap && \
+    rm -rf tmp-extract
 
 # (Air Gap machine) Change Directory to airgap and Set mage path
 $ cd airgap
