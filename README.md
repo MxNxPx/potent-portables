@@ -28,6 +28,7 @@ See Additional Docs [here](./docs/README.md)
 - Zarf
 - Zarf init package
 - Zarf potent-portables package
+- Zarf podinfo package
 - Golang v1.20+ installed
 
 ## Local Dev
@@ -86,7 +87,7 @@ $ cd ./app
 $ zarf package create . --confirm
 
 # (Air Gap machine)
-# Copy zarf, zarf init package, zarf potent-portables package onto portable media
+# Copy zarf, zarf init package, zarf potent-portables package, and zarf podinfo package onto portable media
 # Copy contents of portable media to Air Gap machine
 
 # (Air Gap machine) Extract zarf package
