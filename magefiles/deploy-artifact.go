@@ -12,7 +12,7 @@ import (
 
 type Deploy mg.Namespace
 
-// Install package
+// Install package - aka 'mage d'
 // (For existing OCI package, use: `mage deploy oci://pkg-url-here`, or local, use: `mage deploy local`)
 func (Deploy) Deploy(ociFlag string) {
 
@@ -25,6 +25,7 @@ func (Deploy) Deploy(ociFlag string) {
 }
 
 // Install package using Zarf
+// (conditional sub-Target of 'mage deploy')
 func (Deploy) ZarfDeploy() error {
 	os.Chdir("./app")
 	newDir, err := os.Getwd()
@@ -43,6 +44,7 @@ func (Deploy) ZarfDeploy() error {
 }
 
 // Install OCI package using Zarf
+// (conditional sub-Target of 'mage deploy')
 func (Deploy) ZarfDeployOCI(ociFlag string) error {
 	os.Chdir("./app")
 	newDir, err := os.Getwd()
