@@ -1,0 +1,37 @@
+image: golang:latest
+variables:
+  toolsPath: agent/custom
+ 
+default:
+  cache:
+    key: build-cache
+    paths: 
+      - agent/custom
+      - .go/pkg/mod/
+  before_script:
+    - mkdir -p .go  
+    - mkdir -p $toolsPath
+
+download-deps:       
+  script:
+    - | 
+        echo "Installing mage"
+        go install github.com/magefile/mage@latest &&
+        mv /go/bin/mage $toolsPath/ && $toolsPath/mage -h >/dev/null 2>&1 || echo 'Failed to install mage'
+        echo "Installing zarf"
+        wget -q https://github.com/defenseunicorns/zarf/releases/download/v0.29.2/zarf_v0.29.2_Linux_amd64 && chmod +x ./zarf_v0.29.2_Linux_amd64 && mv ./zarf_v0.29.2_Linux_amd64 $toolsPath/zarf && $toolsPath/zarf -h >/dev/null 2>&1 || echo 'Failed to install zarf'
+        echo "Install completed."
+
+mage-zarf-version:
+  script:
+     - |
+        export PATH=$PATH:$(pwd)/$toolsPath; export MAGEFILE_VERBOSE=1
+        echo "Zarf Version"
+        mage -v build:zarfVersion
+
+mage-zarf-build:
+  script:
+    - |
+       export PATH=$PATH:$(pwd)/$toolsPath; export MAGEFILE_VERBOSE=1
+       echo "Running Zarf Build"
+       mage -v build:zarfBuild

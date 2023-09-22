@@ -1,0 +1,35 @@
+name: mage-ci
+on:
+  push:
+    branches: [ "main" ]
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a multi-line script
+        run: |
+             export GOBIN=$(pwd)/.bin/go
+             export PATH=$PATH:$GOBIN
+             mkdir -p $(pwd)/.bin/go
+             go install github.com/magefile/mage@latest
+             mage -version
+             
+      - name: Install Zarf
+        uses: defenseunicorns/setup-zarf@main
+        with:
+          version: v0.29.2
+      - name: Run mage zarf version
+        run: | 
+              export GOPATH=$(pwd)/.bin/go
+              export PATH=$PATH:$GOPATH
+              export MAGEFILE_VERBOSE=1
+              mage -v build:zarfVersion
+              
+      - name: Run mage zarf build
+        run: | 
+              export GOPATH=$(pwd)/.bin/go
+              export PATH=$PATH:$GOPATH
+              export MAGEFILE_VERBOSE=1
+              mage -v build:zarfBuild

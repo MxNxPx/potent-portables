@@ -73,8 +73,13 @@ $ mage deploy oci://ghcr.io/mxnxpx/packages/podinfo:0.0.1-amd64
 
 ## GitHub & Gitlab Pipelines using Mage
 
+### Reference Templates
+See [Pipeline Templates](pipeline-templates/README.md)
+
+### Examples of the templates in action
 - GitHub: https://github.com/noahpb/potent-portables-pipeline
 - GitLab: https://gitlab.com/noahbirrer/potent-potable-pipeline/
+
 
 ## Air Gap
 
