@@ -1,0 +1,24 @@
+kind: ZarfPackageConfig
+metadata:
+  name: potent-portables
+  description: "Air Gapped CI with Mage"
+  # x-release-please-start-version
+  version: "0.0.1"
+  # x-release-please-end
+  url: https://github.com/magefile/mage
+  image: https://magefile.org/images/gary.svg
+
+components:
+  - name: compile
+    required: true
+    actions:
+      onCreate:
+        before: 
+          - description: "[*] build mage binary"
+            cmd: |
+              echo "[*] build mage binary"
+              mage -compile ../mage-bin/mage
+              chmod 755 ./mage-bin/mage
+    files:
+      - source: ./
+        target: ./
