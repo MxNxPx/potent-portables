@@ -2,6 +2,7 @@
 
 ## pros & cons
 
+* Uses Go and not YAML (Good? Bad?)
 * If you don't know Go or Mage, ChatGPT is able to help with reasonable accuracy
 * Dependencies are flexible
   * If not specified in a Target that contains other Targets, runs in parallel
@@ -10,6 +11,7 @@
 * Will not output the Target step stage by default without adding verbosity
   * `mage -v <TARGET>`
   * `export MAGEFILE_VERBOSE=1`
+* Can pull in Go dependencies as modules and will be included in the compiled mage binary (great for Air Gap!)
 
 ## useful info & links
 
