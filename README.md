@@ -89,14 +89,15 @@ $ zarf package create . --confirm
 # (Air Gap machine)
 # Copy zarf, zarf init package, zarf potent-portables package, and zarf podinfo package onto portable media
 # Copy contents of portable media to Air Gap machine
+# `zarf` somewhere $PATH will find it
+# zarf init package under `~/.zarf-cache`
+# `mkdir ~/airgap/app` & Copy zarf podinfo package
+# Copy zarf potent-portables under `~/`
 
 # (Air Gap machine) Extract zarf package
 $ zarf tools archiver decompress zarf-package-potent-portables-amd64-0.0.1.tar.zst tmp-extract --unarchive-all && \
-    mv tmp-extract/components/compile/files/0 airgap && \
+    cp -Rf tmp-extract/components/compile/files/0/* airgap && \
     rm -rf tmp-extract
-
-# (Air Gap machine)
-# Copy zarf-package-podinfo-amd64-0.0.1.tar.zst into `airgap/app` directory
 
 # (Air Gap machine) Change Directory to airgap and Set mage path
 $ cd airgap

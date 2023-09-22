@@ -3,6 +3,8 @@
 - Stand up Ubuntu VM with golang using Multipass
 - Copy zarf cli to VM under dir named in $PATH
 - Copy zarf init package to ~/.zarf-cache dir in VM
+- Create `airgap/app` dir & Copy `zarf-package-podinfo-amd64-0.0.1.tar.zst` there
+- Copy `zarf-package-potent-portables-amd64-0.0.1.tar.zst` to VM and extract
 - Disable VM outbound connectivity to imitate egress limited environment
 
 ```console
