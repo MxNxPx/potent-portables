@@ -29,7 +29,6 @@ See Additional Docs [here](./docs/README.md)
 - Zarf init package
 - Zarf potent-portables package
 - Zarf podinfo package
-- Golang v1.20+ installed
 
 ## Local Dev
 
